@@ -240,7 +240,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.23}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -251,7 +251,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.77, y: 1.39}
+  m_Size: {x: 0.73, y: 1.35}
   m_EdgeRadius: 0
 --- !u!114 &1393255135705647305
 MonoBehaviour:
@@ -274,13 +274,14 @@ MonoBehaviour:
     maxMana: 20
     currentStamina: 100
     maxStamina: 100
-    strength: 1
-    resistence: 1
-    willPower: 1
-    intelligence: 1
-    damage: 1
-    defense: 1
-    speed: 1
+    strength: 2
+    resistence: 2
+    willPower: 2
+    intelligence: 2
+    damage: 2
+    defense: 2
+    speed: 1.5
+    points: 0
     attackDistance: 0.5
     attackTimer: 1
     cooldown: 1
@@ -289,16 +290,32 @@ MonoBehaviour:
     combatCoroutine: 0
     dead: 0
     entityAudio: {fileID: 6818885244978199240}
+  attributesKey: 99
+  attributesPanel: {fileID: 0}
   health: {fileID: 0}
   mana: {fileID: 0}
   stamina: {fileID: 0}
   exp: {fileID: 0}
   expText: {fileID: 0}
   levelText: {fileID: 0}
+  strengthText: {fileID: 0}
+  resistenceText: {fileID: 0}
+  willPowerText: {fileID: 0}
+  intelligenceText: {fileID: 0}
+  pointsTxt: {fileID: 0}
+  strengthPositiveBtn: {fileID: 0}
+  resistencePositiveBtn: {fileID: 0}
+  willPowerPositiveBtn: {fileID: 0}
+  intelligencePositiveBtn: {fileID: 0}
+  strengthNegativeBtn: {fileID: 0}
+  resistenceNegativeBtn: {fileID: 0}
+  willPowerNegativeBtn: {fileID: 0}
+  intelligenceNegativeBtn: {fileID: 0}
   currentExp: 0
   expBase: 100
   expLeft: 100
   expMod: 1.75
+  givePoints: 5
   LevelUpFX: {fileID: 1613556017666430109, guid: 1cd93513343d0324a9431c0c6467b8c9, type: 3}
   levelUpSound: {fileID: 8300000, guid: 649781b99f46d4f45a9d41cb08e937b2, type: 3}
   respawnTime: 5

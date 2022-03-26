@@ -8,6 +8,12 @@ public class Player : MonoBehaviour
 {
     public Entity entity;
 
+    [Header("Player Shortcuts")]
+    public KeyCode attributesKey = KeyCode.C; //Tecla do teclado para abrir o menu de atributos
+
+    [Header("Player UI Attributes")]
+    public GameObject attributesPanel;
+
     [Header("Player UI")]
     public Slider health;
     public Slider mana;
@@ -15,12 +21,28 @@ public class Player : MonoBehaviour
     public Slider exp;
     public Text expText;
     public Text levelText;
+    public Text strengthText;
+    public Text resistenceText;
+    public Text willPowerText;
+    public Text intelligenceText;
+    public Text pointsTxt;
+    public Button strengthPositiveBtn;
+    public Button resistencePositiveBtn;
+    public Button willPowerPositiveBtn;
+    public Button intelligencePositiveBtn;
+    public Button strengthNegativeBtn;
+    public Button resistenceNegativeBtn;
+    public Button willPowerNegativeBtn;
+    public Button intelligenceNegativeBtn;
+    
+    
 
     [Header("Exp")]
     public int currentExp;
     public int expBase;
     public int expLeft;
-    public float expMod;    
+    public float expMod;
+    public int givePoints = 5;    
     public GameObject LevelUpFX;
     public AudioClip levelUpSound;
 
@@ -39,7 +61,6 @@ public class Player : MonoBehaviour
 
     [Header("Game Manager")]
     public GameManager manager;
-
 
 
     void Start()
@@ -75,6 +96,8 @@ public class Player : MonoBehaviour
         //Rotinas
         StartCoroutine(RegenHealth());
         StartCoroutine(RegenMana());
+        UpdatePoints();
+        SetUIButtons();
     }
 
     private void Update() {
@@ -83,6 +106,10 @@ public class Player : MonoBehaviour
         }
         if(entity.currentHealth <= 0){
             Die();
+        }
+
+        if(Input.GetKeyDown(attributesKey)){
+            attributesPanel.SetActive(!attributesPanel.activeSelf); //Ativa ou desativa o painel de atributos
         }
         
         health.value  = entity.currentHealth;
@@ -178,6 +205,8 @@ public class Player : MonoBehaviour
     public void LevelUp(){
         currentExp -= expLeft;
         entity.level++;
+        entity.points = givePoints;
+        UpdatePoints();
 
         entity.currentHealth = entity.maxHealth;
 
@@ -186,5 +215,84 @@ public class Player : MonoBehaviour
 
         entity.entityAudio.PlayOneShot(levelUpSound);
         Instantiate(LevelUpFX, this.gameObject.transform);
+    }
+
+    public void UpdatePoints(){
+
+        strengthText.text     = entity.strength.ToString();
+        resistenceText.text   = entity.resistence.ToString();
+        willPowerText.text    = entity.willPower.ToString();
+        intelligenceText.text = entity.intelligence.ToString();
+        pointsTxt.text        = entity.points.ToString();
+    }
+
+    public void SetUIButtons(){
+        strengthPositiveBtn.onClick.AddListener(() => {
+            AddPoints(1);
+        });
+        resistencePositiveBtn.onClick.AddListener(() => {
+            AddPoints(2);
+        });
+        willPowerPositiveBtn.onClick.AddListener(() => {
+            AddPoints(3);
+        });
+        intelligencePositiveBtn.onClick.AddListener(() => {
+            AddPoints(4);
+        });
+
+        strengthNegativeBtn.onClick.AddListener(() => {
+            RemovePoints(1);
+        });
+        resistenceNegativeBtn.onClick.AddListener(() => {
+            RemovePoints(2);
+        });
+        willPowerNegativeBtn.onClick.AddListener(() => {
+            RemovePoints(3);
+        });
+        intelligenceNegativeBtn.onClick.AddListener(() => {
+            RemovePoints(4);
+        });
+        
+    }
+
+    public void AddPoints(int index){
+        if(entity.points > 0){
+            if(index == 1){
+                entity.strength++;
+            }
+            else if(index == 2){
+                entity.resistence++;
+            }
+            else if(index == 3){
+                entity.willPower++;
+            }
+            else if(index == 4){
+                entity.intelligence++;
+            }
+
+            entity.points--;
+            UpdatePoints();
+            
+        }
+    }
+
+    public void RemovePoints(int index){
+        if(entity.points > 0 ){
+            if(index == 1 && entity.strength > 0){
+                entity.strength--;
+            }
+            else if(index == 2 && entity.resistence > 0){
+                entity.resistence--;
+            }
+            else if(index == 3 && entity.willPower > 0){
+                entity.willPower--;
+            }
+            else if(index == 4  && entity.intelligence > 0){
+                entity.intelligence--;
+            }
+
+            entity.points++;
+            UpdatePoints();
+        }
     }
 }
